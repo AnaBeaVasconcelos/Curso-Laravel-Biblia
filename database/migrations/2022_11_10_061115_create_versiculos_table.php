@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('capitulo');
             $table->integer('versiculo');
-            $table->integer('texto');
+            $table->string('texto');
             $table->unsignedBigInteger('livro_id');
             $table->timestamps();
 
