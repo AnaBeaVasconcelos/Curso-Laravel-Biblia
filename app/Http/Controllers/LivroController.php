@@ -25,7 +25,15 @@ class LivroController extends Controller
      */
     public function store(Request $request)
     {
-        return Livro::create($request->all());
+        if(Livro::create($request->all())){
+            return response()->json([
+                'mensage' => 'Livro cadastrado com sucesso.'
+            ], 200);
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao cadastrar livro'
+        ], 404);
     }
 
     /**
