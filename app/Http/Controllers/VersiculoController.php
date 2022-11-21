@@ -25,7 +25,15 @@ class VersiculoController extends Controller
      */
     public function store(Request $request)
     {
-        return Versiculo::create($request->all());
+        if (Versiculo::create($request->all())) {
+            return response()->json([
+                'mensage' => 'Versiculo cadastrado com sucesso.'
+            ], 200);
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao cadastrar versiculo'
+        ], 404);
     }
 
     /**
@@ -36,7 +44,14 @@ class VersiculoController extends Controller
      */
     public function show($versiculo)
     {
-        return Versiculo::findOrFail($versiculo);
+        $versiculo = Versiculo::find($versiculo);
+        if ($versiculo) {
+            return $versiculo;
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao pesquisar o versiculo'
+        ], 404);
     }
 
     /**
@@ -48,11 +63,18 @@ class VersiculoController extends Controller
      */
     public function update(Request $request, $versiculo)
     {
-        $Versiculo = Versiculo::findOrFail($versiculo);
 
-        $Versiculo->update($request->all());
+        $versiculo = Versiculo::find($versiculo);
 
-        return $Versiculo;
+        if ($versiculo) {
+            $versiculo->update($request->all());
+
+            return $versiculo;
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao atualizar o versiculo'
+        ], 404);
     }
 
     /**
@@ -63,6 +85,14 @@ class VersiculoController extends Controller
      */
     public function destroy($versiculo)
     {
-        return Versiculo::destroy($versiculo);
+        if (Versiculo::destroy($versiculo)) {
+            return response()->json([
+                'mensage' => 'Versiculo deletado com sucesso.'
+            ], 200);
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao deletar versiculo'
+        ], 404);
     }
 }

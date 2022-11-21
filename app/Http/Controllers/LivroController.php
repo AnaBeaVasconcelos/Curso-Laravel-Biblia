@@ -25,7 +25,7 @@ class LivroController extends Controller
      */
     public function store(Request $request)
     {
-        if(Livro::create($request->all())){
+        if (Livro::create($request->all())) {
             return response()->json([
                 'mensage' => 'Livro cadastrado com sucesso.'
             ], 200);
@@ -44,7 +44,14 @@ class LivroController extends Controller
      */
     public function show($livro)
     {
-        return Livro::FindOrFail($livro);
+        $livro = Livro::find($livro);
+        if ($livro) {
+            return $livro;
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao pesquisar o livro'
+        ], 404);
     }
 
     /**
@@ -56,11 +63,17 @@ class LivroController extends Controller
      */
     public function update(Request $request, $livro)
     {
-        $livro = Livro::FindOrFail($livro);
+        $livro = Livro::find($livro);
 
-        $livro->update($request->all());
+        if ($livro) {
+            $livro->update($request->all());
 
-        return $livro;
+            return $livro;
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao atualizar o livro'
+        ], 404);
     }
 
     /**
@@ -71,6 +84,14 @@ class LivroController extends Controller
      */
     public function destroy($livro)
     {
-        return Livro::destroy($livro);
+        if (Livro::destroy($livro)) {
+            return response()->json([
+                'mensage' => 'Livro deletado com sucesso.'
+            ], 200);
+        }
+
+        return response()->json([
+            'mensage' => 'Erro ao deletar livro'
+        ], 404);
     }
 }
