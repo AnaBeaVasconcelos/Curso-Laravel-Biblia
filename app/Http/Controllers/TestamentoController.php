@@ -46,6 +46,9 @@ class TestamentoController extends Controller
     {
         $testamento = Testamento::find($testamento);
         if ($testamento) {
+
+            $testamento->livros;
+
             return $testamento;
         }
 

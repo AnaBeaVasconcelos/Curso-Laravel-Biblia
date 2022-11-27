@@ -48,14 +48,18 @@ Route::get('/teste', function () {
 // Route::apiResource('versiculo', VersiculoController::class);
 
 // Aprimorando as rotas 2/2
-Route::apiResources([
-    'testamento' =>  TestamentoController::class,
-    'livro' => LivroController::class,
-    'versiculo' => VersiculoController::class,
-]);
+// Aprimorando as rotas para autenticalas com o sanctum
 
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResources([
+        'testamento' =>  TestamentoController::class,
+        'livro' => LivroController::class,
+        'versiculo' => VersiculoController::class,
+    ]);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});

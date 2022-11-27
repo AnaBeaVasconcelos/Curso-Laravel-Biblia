@@ -10,4 +10,13 @@ class Versiculo extends Model
     use HasFactory;
 
     protected $fillable = ['capitulo', 'versiculo', 'texto', 'livro_id'];
+
+    /**
+     * Pegando os livros
+     */
+
+    public function livro()
+    {
+        return $this->belongsTo(Livro::class);
+    }
 }

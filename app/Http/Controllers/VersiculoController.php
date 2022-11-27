@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Versiculo;
+use App\Models\versiculo;
 use Illuminate\Http\Request;
 
-class VersiculoController extends Controller
+class versiculoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class VersiculoController extends Controller
      */
     public function index()
     {
-        return Versiculo::all();
+        return versiculo::all();
     }
 
     /**
@@ -25,9 +25,9 @@ class VersiculoController extends Controller
      */
     public function store(Request $request)
     {
-        if (Versiculo::create($request->all())) {
+        if (versiculo::create($request->all())) {
             return response()->json([
-                'mensage' => 'Versiculo cadastrado com sucesso.'
+                'mensage' => 'versiculo cadastrado com sucesso.'
             ], 200);
         }
 
@@ -44,8 +44,10 @@ class VersiculoController extends Controller
      */
     public function show($versiculo)
     {
-        $versiculo = Versiculo::find($versiculo);
+        $versiculo = versiculo::find($versiculo);
+
         if ($versiculo) {
+            $versiculo->livro; //Relacionamento que quero trazer nas respostas
             return $versiculo;
         }
 
@@ -64,7 +66,7 @@ class VersiculoController extends Controller
     public function update(Request $request, $versiculo)
     {
 
-        $versiculo = Versiculo::find($versiculo);
+        $versiculo = versiculo::find($versiculo);
 
         if ($versiculo) {
             $versiculo->update($request->all());
@@ -85,9 +87,9 @@ class VersiculoController extends Controller
      */
     public function destroy($versiculo)
     {
-        if (Versiculo::destroy($versiculo)) {
+        if (versiculo::destroy($versiculo)) {
             return response()->json([
-                'mensage' => 'Versiculo deletado com sucesso.'
+                'mensage' => 'versiculo deletado com sucesso.'
             ], 200);
         }
 
