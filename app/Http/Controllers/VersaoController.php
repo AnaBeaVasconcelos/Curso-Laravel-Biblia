@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Livro;
+use App\Models\Versao;
 use Illuminate\Http\Request;
 
-class LivroController extends Controller
+class VersaoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,8 @@ class LivroController extends Controller
      */
     public function index()
     {
-        return Livro::all();
+        return Versao::all();
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -25,37 +24,34 @@ class LivroController extends Controller
      */
     public function store(Request $request)
     {
-        if (Livro::create($request->all())) {
+        if (Versao::create($request->all())) {
             return response()->json([
-                'mensage' => 'Livro cadastrado com sucesso.'
-            ], 200);
-        }
+                'message' => 'Versāo criado com sucesso!'
+            ], 201);
 
-        return response()->json([
-            'mensage' => 'Erro ao cadastrar livro'
-        ], 404);
+            return response()->json([
+                'message' => 'Erro ao criar versāo!'
+            ], 400);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $livro
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($livro)
+    public function show($versao)
     {
-        $livro = Livro::find($livro);
-        if ($livro) {
-
-            $livro->testamento;
-            $livro->versiculo;
-            $livro->versao;
-
-            return $livro;
+        $versao = Versao::find($versao);
+        if ($versao) {
+            $versao->idioma;
+            $versao->livros;
+            return $versao;
         }
 
         return response()->json([
-            'mensage' => 'Erro ao pesquisar o livro'
+            'message' => 'Idioma não encontrado!'
         ], 404);
     }
 
@@ -63,40 +59,40 @@ class LivroController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $livro
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $livro)
+    public function update(Request $request, $versao)
     {
-        $livro = Livro::find($livro);
-
-        if ($livro) {
-            $livro->update($request->all());
-
-            return $livro;
+        $versao = Versao::find($versao);
+        if ($versao) {
+            $versao->update($request->all());
+            return $versao;
         }
 
         return response()->json([
-            'mensage' => 'Erro ao atualizar o livro'
+            'message' => 'Erro ao atualizar versāo!'
         ], 404);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $livro
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($livro)
+    public function destroy($versao)
     {
-        if (Livro::destroy($livro)) {
+        if (Versao::destroy($versao)) {
             return response()->json([
-                'mensage' => 'Livro deletado com sucesso.'
+                'mensage' => 'Versāo deletada com sucesso.'
             ], 200);
         }
 
         return response()->json([
-            'mensage' => 'Erro ao deletar livro'
+            'mensage' => 'Erro ao deletar versāo'
         ], 404);
     }
+
 }

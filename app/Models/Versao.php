@@ -10,4 +10,24 @@ class Versao extends Model
     use HasFactory;
 
     protected $table = 'versoes';
+
+    protected $fillable = ['nome', 'abreviacao' ,'idioma_id' ];
+
+    /**
+     * Pega o idioma
+     */
+
+    public function idioma()
+    {
+        return $this->belongsTo(Idioma::class);
+    }
+
+    /**
+     * Pega os livros
+     */
+
+    public function livros()
+    {
+        return $this->hasMany(Livro::class);
+    }
 }
